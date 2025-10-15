@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História de Amor ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8e9ff 100%);
+            min-height: 100%;
+            color: #333;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #e91e63;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            margin: 10px 0;
+            font-weight: 400;
+        }
+
+        .timer-container {
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .floating-timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .floating-timer.visible {
+            opacity: 1;
+        }
+
+        .floating-timer .timer {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #e91e63, #9c27b0);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 40px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            text-align: right;
+            padding-right: 60px;
+        }
+
+        .timeline-item:nth-child(even) {
+            text-align: left;
+            padding-left: 60px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: #e91e63;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-left-color: white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-right-color: white;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .date {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e91e63;
+            margin-bottom: 10px;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .media-button {
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .media-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .media-preview {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #dee2e6;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .media-preview.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .heart {
+            color: #e91e63;
+            font-size: 1.2rem;
+            margin: 0 5px;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .special-milestone {
+            background: linear-gradient(135deg, #e91e63, #9c27b0) !important;
+            color: white;
+        }
+
+        .special-milestone .date {
+            color: #fff;
+        }
+
+        .special-milestone .event-title {
+            color: #fff;
+        }
+
+        .special-sections {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-card h3 {
+            color: #e91e63;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .calendar-container {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-nav {
+            background: #e91e63;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .calendar-day {
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: #f0f0f0;
+        }
+
+        .calendar-day.special {
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            color: white;
+            position: relative;
+        }
+
+        .calendar-day.special::after {
+            content: '❤️';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 0.8rem;
+        }
+
+
+
+        .proposal-section {
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 60px;
+        }
+
+        .proposal-question {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .proposal-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .proposal-btn {
+            padding: 20px 40px;
+            border: 3px solid white;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: white;
+        }
+
+        .proposal-btn:hover {
+            background: white;
+            color: #e91e63;
+            transform: translateY(-3px);
+        }
+
+        .error-message {
+            background: #ff4757;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #e91e63;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.8s ease;
+        }
+
+        .password-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .password-container {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .password-container h2 {
+            color: #e91e63;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .password-container p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e91e63;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 0 auto 20px auto;
+            outline: none;
+            transition: all 0.3s ease;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        .password-input:focus {
+            border-color: #9c27b0;
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .password-btn {
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .password-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .password-error {
+            color: #ff4757;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .forgot-password-btn {
+            background: transparent;
+            color: #e91e63;
+            border: none;
+            padding: 0;
+            font-size: 0.9rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: underline;
+        }
+
+        .forgot-password-btn:hover {
+            color: #9c27b0;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .forgot-message {
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 500;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .forgot-message small {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            filter: blur(10px);
+            transition: filter 0.8s ease;
+        }
+
+        .main-content.unlocked {
+            filter: none;
+        }
+
+        .flying-heart {
+            position: fixed;
+            font-size: 2rem;
+            color: #e91e63;
+            pointer-events: none;
+            z-index: 1000;
+            animation: fly-heart 4s ease-out forwards;
+        }
+
+        @keyframes fly-heart {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50vh) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item {
+                text-align: left !important;
+                padding-left: 60px !important;
+                padding-right: 20px !important;
+            }
+
+            .timeline-item .timeline-content::after {
+                left: -15px !important;
+                right: auto !important;
+                border-left-color: transparent !important;
+                border-right-color: white !important;
+            }
+
+            .timeline-line {
+                left: 30px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .special-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .proposal-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .proposal-question {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de senha -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-container">
+            <h2>Surpresa Mais Que Especial</h2>
+            <p>Fiz essa surpresinha só para o meu benzinho! Esse é nosso cantinho, taa? Só antes, digita a nossa senha para continuar...</p>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Digite a senha..." maxlength="20">
+            <button class="password-btn" onclick="checkPassword()">Entrar</button>
+            <button class="forgot-password-btn" onclick="showForgotPassword()">Esqueci a senha...</button>
+            <div class="password-error" id="passwordError">❌ Senha incorreta... É tu mesmo, meu bem?</div>
+            <div class="forgot-message" id="forgotMessage">
+                Esqueceu a senha, né? Por 10 beijinhos eu penso em te passar ela...
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="main-content" id="mainContent">
+    <div class="header">
+        <h1>Nossa História de Amor <span class="heart">❤️</span></h1>
+        <p>Essa é a jornada mais linda do mundo... A nossa jornada!</p>
+        
+        <div class="timer-container" id="mainTimer">
+            <div>💕 Juntos há:</div>
+            <div class="timer" id="relationshipTimer">Carregando...</div>
+        </div>
+    </div>
+
+    <div class="floating-timer" id="floatingTimer">
+        <div>💕 Juntos há:</div>
+        <div class="timer" id="floatingTimerDisplay">Carregando...</div>
+    </div>
+
+    <div class="timeline-container">
+        <div class="timeline-line"></div>
+        
+        <div class="timeline-item" style="animation-delay: 0.1s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">28 de Setembro, 2023</div>
+                <div class="event-title">Primeira mensagem no Instagram <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.2s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">29 de Junho, 2024</div>
+                <div class="event-title">Primeiro dia no CLJ <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.3s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">29 de Junho, 2024</div>
+                <div class="event-title">Primeiro abraço no CLJ <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.4s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">1 de Julho, 2024</div>
+                <div class="event-title">Primeira mensagem no WhatsApp <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.5s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">21 de Julho, 2024</div>
+                <div class="event-title">Nosso primeiro encontro, no Café da Colônia <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1cual2r-WpXBhJE0TjI8X3_SOm0I-xWiJ?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.6s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">7 de Setembro, 2024</div>
+                <div class="event-title">Primeira foto juntos <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1KbhTjYH75DddMkKKr9T3cmCl7PKZLv8t?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.7s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">24 de Outubro, 2024</div>
+                <div class="event-title">Primeiro terço juntos <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.8s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">24 de Outubro, 2024</div>
+                <div class="event-title">Primeira chamada de vídeo no WhatsApp <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 0.9s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">1 de Novembro, 2024</div>
+                <div class="event-title">Primeira cartinha que recebi <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.0s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">12 de Novembro, 2024</div>
+                <div class="event-title">Entreguei o moletom para você <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.1s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">23 de Novembro, 2024</div>
+                <div class="event-title">Primeiro grande abraço no Norwood <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.2s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">30 de Novembro, 2024</div>
+                <div class="event-title">Primeiro jantar a dois no Don Inácio <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.3s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">1 de Dezembro, 2024</div>
+                <div class="event-title">Primeiro beijo na bochecha <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1bb_MyktJk4f8_2VVr-GBGAOIVt5dteEQ?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.4s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content special-milestone">
+                <div class="date">15 de Dezembro, 2024</div>
+                <div class="event-title">Primeiro beijo <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1G1HyF-m3rTpzzTXwTOjbPERhRGh8T6v6?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.5s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content special-milestone">
+                <div class="date">18 de Dezembro, 2024</div>
+                <div class="event-title">Primeiro "eu te amo" <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.6s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">21 de Dezembro, 2024</div>
+                <div class="event-title">Primeiro beijo de língua <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/19sokuUsjjcg2AHJ3v9aRPrnVy1Ymoqsz?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.7s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">15 de Fevereiro, 2025</div>
+                <div class="event-title">Primeira carta que eu dei <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.8s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">22 de Fevereiro, 2025</div>
+                <div class="event-title">Primeiro passeio com sua família na praia <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1-gpsHsmMfhKnkHskXIAjYzgAKjD6ftLK?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 1.9s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">4 de Março, 2025</div>
+                <div class="event-title">Primeiro passeio com minha família nas piscinas <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1iZzaXah6NT2dkBK0DpB1YAUIMYGJ1BtB?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.0s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content special-milestone">
+                <div class="date">15 de Março, 2025 - 22:27</div>
+                <div class="event-title">Pedido de namoro <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1fEENgaZ1HSeWGqUnfqQTkvvx3hOlTrGn?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.1s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">28 de Março, 2025</div>
+                <div class="event-title">Primeiro treino na academia juntos <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.2s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">18 de Abril, 2025</div>
+                <div class="event-title">Primeiro filme juntos <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.3s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">26 de Abril, 2025</div>
+                <div class="event-title">Primeira vez que fui na sua casa <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1Ny7xIIr61N5Rk2bdJpqiocPeJ8VUwPd0?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.4s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">10 de Maio, 2025</div>
+                <div class="event-title">Primeiro jantar que fizemos juntos <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1VWfLReTMpt6TBpLICepmpJCtiKmoxKY_?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.5s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">1 de Junho, 2025</div>
+                <div class="event-title">Primeira vez que você veio na minha casa <span class="heart">❤️</span></div>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.6s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content special-milestone">
+                <div class="date">15 de Junho, 2025</div>
+                <div class="event-title">Entreguei as alianças <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/15wCiEZBgPBwzYh1u-s_1lvMbiN5xKKHb?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.7s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">27-28 de Setembro, 2025</div>
+                <div class="event-title">Primeiro retiro juntos <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/13TMej6bEsSE27QzBj8fsET6L3MF1qWOG?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+
+        <div class="timeline-item" style="animation-delay: 2.8s">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="date">12 de Outubro, 2025</div>
+                <div class="event-title">Nosso primeiro show juntos <span class="heart">❤️</span></div>
+                <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1slMZQ9uFbQdZ3LDSrH9JRIhb3-NVn0lV?usp=sharing', '_blank')">Ver fotos e vídeos</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="special-sections">
+        <div class="section-card">
+            <h3>📸 Todas as Nossas Memórias</h3>
+            <p>Um lugar especial onde todas as nossas fotos e vídeos ficam guardados com carinho</p>
+            <button class="media-button" onclick="window.open('https://drive.google.com/drive/folders/1wvMZEgZ7zJ70GlGCYcksMRuwpHfqin7c?usp=sharing', '_blank')">Ver Todas as Mídias</button>
+        </div>
+
+        <div class="section-card">
+            <h3>📅 Calendário do Amor</h3>
+            <p>Uma história repleta de momentos especiais e memórias inesquecíveis</p>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="calendar-nav" onclick="previousMonth()">‹</button>
+                    <h4 id="currentMonth">Março 2025</h4>
+                    <button class="calendar-nav" onclick="nextMonth()">›</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendário será gerado pelo JavaScript -->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="proposal-section">
+        <div class="proposal-question">
+            Aceita viver o resto da tua vida ao meu lado? 💍
+        </div>
+        <div class="proposal-buttons">
+            <button class="proposal-btn" onclick="acceptProposal()">Claro! 💕</button>
+            <button class="proposal-btn" onclick="showError()">Já que é a única opção né 😏</button>
+        </div>
+        <div class="error-message" id="errorMessage">
+            ❌ Erro! Resposta inválida. Tente novamente! 😄
+        </div>
+    </div>
+
+
+
+    <!-- Modal para todas as mídias -->
+    <div class="modal" id="mediaModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAllMedia()">&times;</span>
+            <h2 style="color: #e91e63; text-align: center; margin-bottom: 30px;">📸 Todas as Nossas Memórias</h2>
+            <div style="text-align: center; color: #666;">
+                <p>Aqui você pode adicionar todas as fotos e vídeos especiais da nossa história!</p>
+                <p>Organize por datas, momentos ou como preferir. Cada memória é preciosa! 💕</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Datas especiais para o calendário
+        const specialDates = {
+            '2023-09-28': 'Primeira mensagem no Instagram',
+            '2024-06-29': 'Primeiro dia no CLJ e primeiro abraço',
+            '2024-07-01': 'Primeira mensagem no WhatsApp',
+            '2024-07-21': 'Primeiro encontro no Café da Colônia',
+            '2024-09-07': 'Primeira foto juntos',
+            '2024-10-24': 'Primeiro terço e primeira videochamada',
+            '2024-11-01': 'Primeira cartinha que recebi',
+            '2024-11-12': 'Entreguei o moletom',
+            '2024-11-23': 'Primeiro grande abraço em Norwood',
+            '2024-11-30': 'Primeiro jantar a dois no Don Inácio',
+            '2024-12-01': 'Primeiro beijo na bochecha',
+            '2024-12-15': 'Primeiro beijo',
+            '2024-12-18': 'Primeiro "eu te amo"',
+            '2024-12-21': 'Primeiro beijo de língua',
+            '2025-02-15': 'Primeira carta que eu dei',
+            '2025-02-22': 'Primeiro passeio com sua família',
+            '2025-03-04': 'Primeiro passeio com minha família',
+            '2025-03-15': 'Pedido de namoro',
+            '2025-03-28': 'Primeiro treino na academia',
+            '2025-04-18': 'Primeiro filme juntos',
+            '2025-04-26': 'Primeira vez na sua casa',
+            '2025-05-10': 'Primeiro jantar que fizemos',
+            '2025-06-01': 'Primeira vez na minha casa',
+            '2025-06-15': 'Entreguei as alianças',
+            '2025-09-27': 'Primeiro retiro juntos',
+            '2025-10-12': 'Primeiro show juntos'
+        };
+
+        let currentCalendarDate = new Date(2025, 2); // Março 2025
+
+        function updateTimer() {
+            const startDate = new Date('2025-03-15T22:27:00');
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            const timeString = `${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
+            
+            document.getElementById('relationshipTimer').innerHTML = timeString;
+            document.getElementById('floatingTimerDisplay').innerHTML = timeString;
+        }
+
+        function toggleMedia(button) {
+            const preview = button.nextElementSibling;
+            preview.classList.toggle('active');
+            
+            if (preview.classList.contains('active')) {
+                button.textContent = 'Ocultar mídia';
+            } else {
+                button.textContent = 'Ver fotos e vídeos';
+            }
+        }
+
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                              'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            
+            document.getElementById('currentMonth').textContent = 
+                `${monthNames[currentCalendarDate.getMonth()]} ${currentCalendarDate.getFullYear()}`;
+            
+            grid.innerHTML = '';
+            
+            // Cabeçalhos dos dias da semana
+            const dayHeaders = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.textContent = day;
+                header.style.fontWeight = '600';
+                header.style.color = '#e91e63';
+                grid.appendChild(header);
+            });
+            
+            const firstDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), 1);
+            const lastDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth() + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            for (let i = 0; i < 42; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = date.getDate();
+                
+                if (date.getMonth() !== currentCalendarDate.getMonth()) {
+                    dayElement.style.opacity = '0.3';
+                }
+                
+                const dateString = date.toISOString().split('T')[0];
+                if (specialDates[dateString]) {
+                    dayElement.classList.add('special');
+                    dayElement.title = specialDates[dateString];
+                }
+                
+                grid.appendChild(dayElement);
+            }
+        }
+
+        function previousMonth() {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+            generateCalendar();
+        }
+
+        function nextMonth() {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+            generateCalendar();
+        }
+
+        function openAllMedia() {
+            document.getElementById('mediaModal').style.display = 'flex';
+        }
+
+        function closeAllMedia() {
+            document.getElementById('mediaModal').style.display = 'none';
+        }
+
+        function showError() {
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.style.display = 'block';
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 3000);
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            const overlay = document.getElementById('passwordOverlay');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (input.value === 'soua+sortuda') {
+                overlay.classList.add('hidden');
+                mainContent.classList.add('unlocked');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 800);
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.style.borderColor = '#ff4757';
+                setTimeout(() => {
+                    error.style.display = 'none';
+                    input.style.borderColor = '#e91e63';
+                }, 3000);
+            }
+        }
+
+        function showForgotPassword() {
+            const forgotMessage = document.getElementById('forgotMessage');
+            const error = document.getElementById('passwordError');
+            
+            // Esconder erro se estiver visível
+            error.style.display = 'none';
+            
+            // Mostrar mensagem fofa
+            forgotMessage.style.display = 'block';
+            
+            // Esconder a mensagem após 5 segundos
+            setTimeout(() => {
+                forgotMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function createFlyingHearts() {
+            const heartEmojis = ['💕', '❤️', '💖', '💗', '💝', '💘'];
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'flying-heart';
+                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        function acceptProposal() {
+            createConfetti();
+            createFlyingHearts();
+            setTimeout(() => {
+                const message = document.createElement('div');
+                message.innerHTML = `
+                    <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                background: white; padding: 40px; border-radius: 20px; text-align: center; 
+                                z-index: 3000; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                        <h2 style="color: #e91e63; margin-bottom: 20px;">💕 Eu te amo mais que tudo! 💕</h2>
+                        <p style="font-size: 1.2rem; color: #333;">Que a nossa história nunca tenha fim!</p>
+                        <button onclick="this.parentElement.parentElement.remove()" 
+                                style="background: linear-gradient(45deg, #e91e63, #9c27b0); color: white; 
+                                       border: none; padding: 15px 30px; border-radius: 15px; 
+                                       font-size: 1.1rem; margin-top: 20px; cursor: pointer;">
+                            ❤️ Fechar
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(message);
+            }, 1000);
+        }
+
+        function createConfetti() {
+            const colors = ['#e91e63', '#9c27b0', '#ff6b9d', '#c44569'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 50);
+            }
+        }
+
+        // Controle do timer flutuante
+        window.addEventListener('scroll', () => {
+            const mainTimer = document.getElementById('mainTimer');
+            const floatingTimer = document.getElementById('floatingTimer');
+            const mainTimerRect = mainTimer.getBoundingClientRect();
+            
+            if (mainTimerRect.bottom < 0) {
+                floatingTimer.classList.add('visible');
+            } else {
+                floatingTimer.classList.remove('visible');
+            }
+
+            // Efeito de scroll para timeline
+            const items = document.querySelectorAll('.timeline-item');
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Fechar modais clicando fora
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Suporte para Enter na senha
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Inicialização
+        updateTimer();
+        setInterval(updateTimer, 1000); // Atualizar a cada segundo
+        generateCalendar();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f04099a3b2877d',t:'MTc2MDU0MTEyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
