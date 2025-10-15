@@ -61,26 +61,29 @@
 
         .floating-timer {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
             z-index: 1000;
             background: linear-gradient(45deg, #e91e63, #9c27b0);
             color: white;
-            padding: 15px 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
-            transform: scale(0.8);
+            padding: 8px 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+            transform: scale(0.85);
             opacity: 0;
             transition: all 0.3s ease;
+            max-width: 200px;
+            font-size: 0.75rem;
         }
 
         .floating-timer.visible {
-            opacity: 1;
+            opacity: 0.95;
         }
 
         .floating-timer .timer {
-            font-size: 1rem;
+            font-size: 0.7rem;
             margin: 0;
+            line-height: 1.2;
         }
 
         .timeline-container {
@@ -92,12 +95,11 @@
 
         .timeline-line {
             position: absolute;
-            left: 50%;
+            left: 25px;
             top: 0;
             bottom: 0;
-            width: 4px;
+            width: 3px;
             background: linear-gradient(to bottom, #e91e63, #9c27b0);
-            transform: translateX(-50%);
             border-radius: 2px;
         }
 
@@ -109,14 +111,10 @@
             animation: fadeInUp 0.8s ease forwards;
         }
 
-        .timeline-item:nth-child(odd) {
-            text-align: right;
-            padding-right: 60px;
-        }
-
-        .timeline-item:nth-child(even) {
+        .timeline-item {
             text-align: left;
             padding-left: 60px;
+            padding-right: 20px;
         }
 
         .timeline-content {
@@ -135,70 +133,58 @@
             border-color: #e91e63;
         }
 
-        .timeline-item:nth-child(odd) .timeline-content::after {
+        .timeline-content::after {
             content: '';
             position: absolute;
-            right: -15px;
+            left: -12px;
             top: 50%;
             transform: translateY(-50%);
             width: 0;
             height: 0;
-            border: 15px solid transparent;
-            border-left-color: white;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content::after {
-            content: '';
-            position: absolute;
-            left: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border: 15px solid transparent;
+            border: 12px solid transparent;
             border-right-color: white;
         }
 
         .timeline-dot {
             position: absolute;
-            left: 50%;
+            left: 25px;
             top: 50%;
             transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             background: linear-gradient(45deg, #e91e63, #9c27b0);
             border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid white;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
             z-index: 10;
         }
 
         .date {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #e91e63;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .event-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #333;
-            margin-bottom: 15px;
-            line-height: 1.4;
+            margin-bottom: 12px;
+            line-height: 1.3;
         }
 
         .media-button {
             background: linear-gradient(45deg, #e91e63, #9c27b0);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
+            padding: 10px 20px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            margin-top: 15px;
+            margin-top: 12px;
             box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
         }
 
@@ -244,7 +230,7 @@
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
 
         .special-milestone {
@@ -261,19 +247,19 @@
         }
 
         .special-sections {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
+            max-width: 100%;
+            margin: 40px auto;
+            padding: 0 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
 
         .section-card {
             background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: all 0.3s ease;
         }
@@ -285,33 +271,34 @@
 
         .section-card h3 {
             color: #e91e63;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .calendar-container {
             background: #f8f9ff;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
         }
 
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .calendar-nav {
             background: #e91e63;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .calendar-grid {
@@ -322,11 +309,12 @@
         }
 
         .calendar-day {
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px 4px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
+            font-size: 0.9rem;
         }
 
         .calendar-day:hover {
@@ -353,33 +341,37 @@
             background: linear-gradient(135deg, #e91e63, #9c27b0);
             color: white;
             text-align: center;
-            padding: 60px 20px;
-            margin-top: 60px;
+            padding: 40px 15px;
+            margin-top: 40px;
         }
 
         .proposal-question {
-            font-size: 2rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            line-height: 1.3;
         }
 
         .proposal-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
         }
 
         .proposal-btn {
-            padding: 20px 40px;
-            border: 3px solid white;
-            border-radius: 25px;
-            font-size: 1.2rem;
+            padding: 15px 30px;
+            border: 2px solid white;
+            border-radius: 20px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             background: transparent;
             color: white;
+            width: 100%;
+            max-width: 280px;
         }
 
         .proposal-btn:hover {
@@ -438,26 +430,28 @@
 
         .password-container {
             background: white;
-            padding: 50px;
-            border-radius: 25px;
+            padding: 30px 20px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            max-width: 350px;
             width: 90%;
+            margin: 0 15px;
         }
 
         .password-container h2 {
             color: #e91e63;
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
             font-weight: 700;
+            line-height: 1.3;
         }
 
         .password-container p {
             color: #666;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
         }
 
         .password-input {
@@ -591,60 +585,109 @@
 
         .modal-content {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 600px;
-            max-height: 80vh;
+            padding: 25px 20px;
+            border-radius: 15px;
+            max-width: 95vw;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
+            margin: 10px;
         }
 
         .close-modal {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 2rem;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
             cursor: pointer;
             color: #999;
+            background: #f0f0f0;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        @media (max-width: 768px) {
-            .timeline-item {
-                text-align: left !important;
-                padding-left: 60px !important;
-                padding-right: 20px !important;
-            }
-
-            .timeline-item .timeline-content::after {
-                left: -15px !important;
-                right: auto !important;
-                border-left-color: transparent !important;
-                border-right-color: white !important;
-            }
-
-            .timeline-line {
-                left: 30px;
-            }
-
-            .timeline-dot {
-                left: 30px;
-            }
-
+        @media (max-width: 480px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
-            .special-sections {
-                grid-template-columns: 1fr;
+            .header p {
+                font-size: 1rem;
             }
 
-            .proposal-buttons {
-                flex-direction: column;
-                align-items: center;
+            .timer-container {
+                margin: 15px auto;
+                padding: 15px;
+            }
+
+            .timer {
+                font-size: 1rem;
+            }
+
+            .timeline-container {
+                padding: 30px 15px;
+            }
+
+            .timeline-item {
+                margin: 30px 0;
+                padding-left: 50px;
+                padding-right: 15px;
+            }
+
+            .timeline-content {
+                padding: 20px;
+            }
+
+            .date {
+                font-size: 0.8rem;
+            }
+
+            .event-title {
+                font-size: 1rem;
+            }
+
+            .media-button {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+
+            .floating-timer {
+                top: 5px;
+                right: 5px;
+                padding: 6px 10px;
+                max-width: 180px;
+                font-size: 0.7rem;
+            }
+
+            .floating-timer .timer {
+                font-size: 0.65rem;
+            }
+
+            .password-container {
+                padding: 25px 15px;
+                max-width: 320px;
+            }
+
+            .password-container h2 {
+                font-size: 1.4rem;
+            }
+
+            .password-container p {
+                font-size: 0.9rem;
             }
 
             .proposal-question {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
+            }
+
+            .proposal-btn {
+                padding: 12px 25px;
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -1251,5 +1294,5 @@
         setInterval(updateTimer, 1000); // Atualizar a cada segundo
         generateCalendar();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f04099a3b2877d',t:'MTc2MDU0MTEyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f0e78c72e0877d',t:'MTc2MDU0Nzk1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
